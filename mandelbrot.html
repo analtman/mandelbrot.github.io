@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mandelbrot Set</title>
+</head>
+<body>
+	<div style="text-align:center;">
+		<canvas id="canvas"></canvas>
+		<br>
+		<button id="download-btn" style="background-color:orange; color:brown;">Download Image</button>
+	</div>
+
+	<script>
+		// Set canvas dimensions
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		// Set mandelbrot parameters
+		var maxIterations = 100;
+		var zoom = 200;
+		var offsetX = -2.5;
+		var offsetY = -1;
+
+		// Set color scheme
+		var colors = ["#FFB6C1", "#FFC0CB", "#FF69B4", "#FF1493", "#DB7093", "#C71585", "#B0E0E6", "#ADD8E6", "#87CEFA", "#87CEEB", "#00BFFF", "#1E90FF", "#6495ED", "#7B68EE"];
+
+		// Calculate mandelbrot set and color pixels
+		for (var x = 0; x < canvas.width; x++) {
+			for (var y = 0; y < canvas.height; y++) {
+				var real = (x - canvas.width/2) / zoom + offsetX;
+				var imag = (y - canvas.height/2) / zoom + offsetY;
+
+				var zReal = 0;
+				var zImag = 0;
+				var iteration = 0;
+
+				while (zReal*zReal + zImag*zImag <= 4 && iteration < maxIterations) {
+					var tempReal = zReal*zReal - zImag*zImag + real;
+					var tempImag = 2*zReal*zImag + imag;
+					zReal = tempReal;
+					zImag = tempImag;
+					iteration++;
+				}
+
+				if (iteration == maxIterations) {
+					ctx.fillStyle = "#000000";
+				} else {
+					var color = colors[iteration % colors.length];
+					ctx.fillStyle = color;
+				}
+
+				ctx.fillRect(x, y, 1, 1);
+			}
+		}
+
+		// Download image when button is clicked
+		document.getElementById("download-btn").addEventListener("click", function() {
+			var link = document.createElement('a');
+			link.download = "mandelbrot.jpg";
+			link.href = canvas.toDataURL("image/jpeg");
+			link.click();
+		});
+	</script>
+</body>
+</html>
