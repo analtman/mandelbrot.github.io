@@ -4,7 +4,7 @@
 	<title>Mandelbrot Set</title>
 	<style>
 		canvas {
-			width: 100%;
+			width: 90%;
 			height: auto;
 		}
 	</style>
@@ -22,7 +22,7 @@
 			var canvas = document.getElementById("canvas");
 			var ctx = canvas.getContext("2d");
 			var maxIterations = 100;
-			var zoom = 200;
+			var zoom = 100;
 			var offsetX = -2.5;
 			var offsetY = -1;
 			var colors = ["#FFA500", "#720AFB", "#000000", "##FADC16", "#1CFFD3", "#77F07B"];
@@ -75,6 +75,7 @@
 				}
 				draw();
 			});
+			
 
 			colors = shuffleArray(colors);
 			draw();
